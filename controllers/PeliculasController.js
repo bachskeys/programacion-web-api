@@ -8,7 +8,6 @@ function getPeliculas(req, res) {
             if(err){
                 res.send(err)
             } else {
-                console.log(peliculas);
                 res.json(peliculas);
             }
         })
@@ -23,7 +22,6 @@ function getPelicula(req,res) {
             if(err){
                 res.send(err)
             } else {
-                console.log(pelicula)
                 res.json(pelicula)
             }
         })
@@ -80,12 +78,10 @@ function borrarPelicula(req,res){
 function editarPelicula(req,res){
     if(connection){
         const pelicula = req.body;
-        const{Titulo,director,anio,id} = pelicula;
-        console.log(pelicula)
-        console.log(anio)
-        let sql = `UPDATE peliculas SET Titulo = '${Titulo}', director = '${director}', anio = '${anio}' WHERE id =${id}`
+        const{Titulo,director,Anio,id} = pelicula;
+        let sql = `UPDATE peliculas SET Titulo = '${Titulo}', director = '${director}', anio = '${Anio}' WHERE id =${id}`
 
-        if(!pelicula.director || !pelicula.Titulo || !pelicula.anio){
+        if(!pelicula.director || !pelicula.Titulo || !pelicula.Anio){
             return res.status(400).send({error: true, mensaje: "El titulo y el autor son obligatorios"})
         }
         if(pelicula.Titulo.length >120) {
@@ -95,7 +91,7 @@ function editarPelicula(req,res){
             return res.status(400).send({error: true, mensaje: "el director no debe exeder de 100 caracteres."})
 
         }
-        if(pelicula.anio.length != 4){
+        if(pelicula.Anio.length != 4){
             return res.status(400).send({error: true, mensaje: "el año no debe ser de 4 caracteres."})
         }
         connection.query(sql, (err, pelicula) => {
